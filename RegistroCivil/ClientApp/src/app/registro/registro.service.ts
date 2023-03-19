@@ -22,7 +22,8 @@ export class RegistroService {
   crearRegistro(registro:IRegistro):Observable<IRegistro>{
      this.apiURL = "https://localhost:7216/api/Registros";
      console.table(registro)
-    return this.http.post<IRegistro>(this.apiURL,registro);
+
+    return this.http.post<IRegistro>(this.apiURL,<IRegistro>registro);
   }
 
   eliminarRegistro(id:string):Observable<IRegistro>{

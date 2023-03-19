@@ -19,7 +19,6 @@ export class RegistroComponent implements OnInit {
   }
 
   borrar(registro:IRegistro){
-    console.log("birrando")
     this.registroServices.eliminarRegistro(registro.registroID.toString())
     .subscribe(()=>this.cargarRegistros(), error=>console.log(error));
     
