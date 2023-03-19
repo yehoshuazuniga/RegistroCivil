@@ -4,7 +4,7 @@
       <h1>Registros </h1>
       <p  *ngIf="!(registros && registros.length )">NO hay registros Creados</p>
       <div class="text-center mb-3"><button class="btn btn-dark col-12 col-sm-3" [routerLink]='["/add-registro"]'>Crear nuevo Registro</button></div>
-      <table class="table table-stripped table-hover" *ngIf="registros">
+      <table class="table table-stripped table-hover table-bordered" *ngIf="registros">
         <thead>
           <tr class="table table-dark">
             <td>ID</td>
@@ -24,13 +24,13 @@
             <td>{{registro.nombre}} </td>
             <td>{{registro.apellido}} </td>
             <td>{{registro.sexo}} </td>
-            <td>{{registro.fechaNacimiento | date: 'dd/MM/yyyy hh:mm'  }} </td>
+            <td>{{registro.fechaNacimiento | date: 'dd/MM/yyyy HH:mm'  }} </td>
             <td >{{registro.numeroIdentificacion}} </td>
             <td class="text-center"> 
               <span *ngIf="registro.monoparental">SI</span>
               <span *ngIf="!registro.monoparental">NO</span>
             </td>
-            <td><button class="btn btn-warning" >Editar</button></td>
+            <td><button class="btn btn-warning" [routerLink]='["/registro-edit/"+registro.registroID]' >Editar</button></td>
             <td><button class="btn btn-danger" (click)="borrar(registro)">Borrar</button></td>
           </tr>
         </tbody>

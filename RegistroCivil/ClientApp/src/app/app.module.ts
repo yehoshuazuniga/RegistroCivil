@@ -30,7 +30,9 @@ import { RegistroFormComponent } from './registro/registro-form/registro-form.co
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'registros', component: RegistroComponent },
-      { path: 'add-registro', component: RegistroFormComponent }
+      { path: 'add-registro', component: RegistroFormComponent },
+      { path: 'add-registro', component: RegistroFormComponent },
+      { path: 'registro-edit/:id', component: RegistroFormComponent }
     ])
   ],
   providers: [RegistroService],

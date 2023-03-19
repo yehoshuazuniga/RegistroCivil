@@ -19,9 +19,19 @@ export class RegistroService {
     return this.http.get<IRegistro[]>(this.apiURL);
   }
 
+  getRegistro(registroID:string):Observable<IRegistro>{
+    this.apiURL = "https://localhost:7216/api/Registros";
+    return this.http.get<IRegistro>(this.apiURL + '/' + registroID);
+  }
+
+  actualizarRegistro(registro:IRegistro):Observable<IRegistro>{
+    this.apiURL = "https://localhost:7216/api/Registros";
+    return this.http.put<IRegistro>(this.apiURL + '/' + registro.registroID.toString(), registro);
+  }
+
   crearRegistro(registro:IRegistro):Observable<IRegistro>{
      this.apiURL = "https://localhost:7216/api/Registros";
-     console.table(registro)
+    console.table("crearRegistro")
 
     return this.http.post<IRegistro>(this.apiURL,<IRegistro>registro);
   }

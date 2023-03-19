@@ -1,6 +1,6 @@
 import { Component, Directive, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IRegistro } from '../iregistro';
 import { RegistroService } from '../registro.service';
 
@@ -15,18 +15,17 @@ import { RegistroService } from '../registro.service';
 
 export class RegistroFormComponent implements OnInit {
 
-
-
+  //constructor con injecciones de servicios
   constructor(private fb: FormBuilder,
     private registroSerices: RegistroService,
-    private router: Router) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
-  @Input("horaValue")
-  public hora?: string;
-
-  public horaValue?: string;
-
+  //variables
   formGroup!: FormGroup;
+  edicionRegistro: boolean = false;
+  registroID!: number;
+  fechaVal!: Date;
 
   ngOnInit(): void {
 
@@ -35,14 +34,51 @@ export class RegistroFormComponent implements OnInit {
       nombre: '',
       apellido: '',
       sexo: '',
-      hora: '',
       fechaNacimiento: '',
+      hora: '',
       monoparental: false
-    })
+    });
+
+    this.activatedRoute.params.subscribe(params => {
+      if (params["id"] == undefined) {
+        return;
+      } else {
+        this.edicionRegistro = true;
+        this.registroID = params["id"];
+      }
+    });
+
+    this.registroSerices.getRegistro(this.registroID.toString())
+      .subscribe((registro) => this.cargarFormulario(registro), error => console.error(error));
+
 
   }
 
+  cargarFormulario(registro: IRegistro) {
+    let date = new Date(registro.fechaNacimiento);
+    const dateField = date.toISOString().substring(0, 10);
+    const timeField = date.toISOString().substring(11, 16);
+
+    this.formGroup.patchValue({
+      numeroIdentificacion: registro.numeroIdentificacion,
+      nombre: registro.nombre,
+      apellido: registro.apellido,
+      sexo: registro.sexo,
+      fechaNacimiento: dateField,
+      hora: timeField,
+      monoparental: registro.monoparental
+    })
+   /* console.log(date.toISOString().substring(11, 16))
+      c this.formGroup.controls['fechaNacimiento'].setValue(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate());
+    this.fechaVal = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+    onsole.table(date.toLocaleDateString())
+    console.table(date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate())
+ */
+  }
+
   save() {
+    
+
     this.formGroup.value.fechaNacimiento = this.gestionFecha(this.formGroup.value.fechaNacimiento, this.formGroup.value.hora);
     delete this.formGroup.value.hora;
     let registro: IRegistro = Object.assign({}, this.formGroup.value);
@@ -50,6 +86,16 @@ export class RegistroFormComponent implements OnInit {
     // console.table(registro);
 
     this.registroSerices.crearRegistro(registro).subscribe(() => this.Registrado(), error => console.error(error))
+    if(this.edicionRegistro){
+      //edit
+      registro.registroID = this.registroID;
+      this.registroSerices.actualizarRegistro(registro)
+        .subscribe(() => this.Registrado(), error=> console.error(error));
+    }else{
+      //crear
+      this.registroSerices.crearRegistro(registro)
+      .subscribe(() => this.Registrado(), error => console.error(error))
+    }
 
   }
 
