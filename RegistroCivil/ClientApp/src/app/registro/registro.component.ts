@@ -12,8 +12,7 @@ export class RegistroComponent implements OnInit {
   public registros: IRegistro[]=[];
   public paginaActual:number=1;
   public query:string='';
-  public queryOrden: string = 'nombre';
-  public mode:string =':false:true';
+  public queryOrden: string = 'registroID';
   public queryFilterSexo:string='';
 
   constructor(private registroServices:RegistroService ) { }

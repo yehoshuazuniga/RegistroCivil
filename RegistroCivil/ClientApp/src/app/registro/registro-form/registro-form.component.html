@@ -1,7 +1,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-10 col-md-12">
-            <h1>Añadir registros</h1>
+            <h1 *ngIf="!edicionRegistro">Añadir registros</h1>
+            <h1 *ngIf="edicionRegistro">Editar registros</h1>
             <form class="form shadow-lg " (ngSubmit)="save()" [formGroup]="formGroup">
                 <fieldset>
                     <div class="col">
@@ -20,18 +21,45 @@
                         >
                     </div>
                     <div class="col">
-                        <label for="numeroIdentificacion">Numero de Identificación</label>
-                        <input type="text" class=" form-control"
+                        <label for="numeroIdentificacion">Comunidad Autonoma</label>
+                     <!--    <input type="text" class=" form-control"
                             id="numeroIdentificacion"
                             formControlName="numeroIdentificacion"
-                        >
+                        > -->
+                        <select name="ddlNumeroIdentificaion" 
+                        class=" form-control" id="numeroIdentificacion"
+                        formControlName="numeroIdentificacion">
+                            <option value="">--- Seleccione Comunidad Autonoma ---</option>
+                            <option value="AN">Andalucía</option>
+                            <option value="AR">Aragón</option>
+                            <option value="AS">Asturias</option>
+                            <option value="IB">Baleares</option>
+                            <option value="CN">Canarias</option>
+                            <option value="CB">Cantabria</option>
+                            <option value="CM">Castilla-La Mancha</option>
+                            <option value="CL">Castilla y León</option>
+                            <option value="CT">Cataluña</option>
+                            <option value="CE">Ceuta</option>
+                            <option value="VC">Comunidad Valenciana</option>
+                            <option value="EX">Extremadura</option>
+                            <option value="GA">Galicia</option>
+                            <option value="MD">Madrid</option>
+                            <option value="ML">Melilla</option>
+                            <option value="MU">Murcia</option>
+                            <option value="NA">Navarra</option>
+                            <option value="PV">País Vasco</option>
+                            <option value="RI">La Rioja</option>
+                        </select>
+
                     </div>
                     <div class="col">
                         <label for="sexo">Sexo</label>
-                        <input type="text" class=" form-control"
-                            id="sexo"
-                            formControlName="sexo"
-                        >
+                       
+                        <select class=" form-control" id="ddlSexoFrom" formControlName="sexo">
+                            <option value="">--- Selecciona un Sexo ---</option>
+                            <option value="F">Femenino</option>
+                            <option value="M">Masculino</option>
+                        </select>
                     </div>
                     <div class="col">
                         <label for="fechaNacimiento">Fecha de Nacimiento</label>

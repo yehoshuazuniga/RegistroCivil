@@ -26,6 +26,8 @@ export class RegistroFormComponent implements OnInit {
   edicionRegistro: boolean = false;
   registroID!: number;
   fechaVal!: Date;
+  public registrosCoinciden:number=0;
+
 
   ngOnInit(): void {
 
@@ -62,7 +64,7 @@ export class RegistroFormComponent implements OnInit {
     let m = date.getMinutes() >= 10 ? date.getMinutes() : '0' + date.getMinutes();
 
     this.formGroup.patchValue({
-      numeroIdentificacion: registro.numeroIdentificacion,
+      numeroIdentificacion: registro.numeroIdentificacion.substring(0,2),
       nombre: registro.nombre,
       apellido: registro.apellido,
       sexo: registro.sexo,
@@ -70,6 +72,7 @@ export class RegistroFormComponent implements OnInit {
       hora: h+":"+m,
       monoparental: registro.monoparental
     })
+    console.log(this.formGroup.value.numeroIdentificacion)
    /* console.log(this.edicionRegistro)
     console.log(date.toISOString().substring(11, 16))
       c this.formGroup.controls['fechaNacimiento'].setValue(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate());
@@ -81,15 +84,13 @@ export class RegistroFormComponent implements OnInit {
 
   save() {
     
- console.log(this.formGroup.value.fechaNacimiento)
     this.formGroup.value.fechaNacimiento = this.gestionFecha(this.formGroup.value.fechaNacimiento, this.formGroup.value.hora);
-    console.log(this.formGroup.value.fechaNacimiento)
-
-
     delete this.formGroup.value.hora;
+    this.formGroup.value.numeroIdentificacion = this.gestionNumeroIDentificacion(this.formGroup.value.numeroIdentificacion);
+
     let registro: IRegistro = Object.assign({}, this.formGroup.value);
-    //registro.fechaNacimiento= registro.fechaNacimiento+" "+this.formGroup.value.hora;
-    console.table(registro);
+    console.log(registro)
+
 
     if(this.edicionRegistro){
       //edit
@@ -118,9 +119,21 @@ export class RegistroFormComponent implements OnInit {
     let auxF: string[] = fecha.split('-')
     let auxH: string[] = hora.split(':')
 
-    let datetime: Date = new Date(parseInt(auxF[0]), parseInt(auxF[1])-1, parseInt(auxF[2]), parseInt(auxH[0])+2, parseInt(auxH[1]))
+    console.log(auxF+" "+auxH)
+    let datetime: Date = new Date(parseInt(auxF[0]), parseInt(auxF[1])-1, parseInt(auxF[2]), parseInt(auxH[0])+1, parseInt(auxH[1]))
+    console.log(datetime.toJSON())
 
     return datetime.toJSON();
+  }
+   gestionNumeroIDentificacion(cm:string):string{
+
+    const na1 = Math.floor(Math.random() * 10) ;
+    const na2 = Math.floor(Math.random() * 10) ;
+    const na3 = Math.floor(Math.random() * 10) ;
+    const na4 = Math.floor(Math.random() * 10) ;
+    let nIdentificacion = cm +""+na1+""+na2+""+na3+""+na4;
+
+     return nIdentificacion;
   }
 
 }
