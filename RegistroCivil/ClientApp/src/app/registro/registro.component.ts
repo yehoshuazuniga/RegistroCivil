@@ -10,6 +10,8 @@ import { RegistroService } from './registro.service';
 export class RegistroComponent implements OnInit {
 
   public registros: IRegistro[]=[];
+  public paginaActual:number=1;
+  public query:string='';
 
   constructor(private registroServices:RegistroService ) { }
 
