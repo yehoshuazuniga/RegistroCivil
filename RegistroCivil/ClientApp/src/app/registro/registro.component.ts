@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChange } from '@angular/core';
 import { IRegistro } from './iregistro';
 import { RegistroService } from './registro.service';
 
@@ -12,6 +12,9 @@ export class RegistroComponent implements OnInit {
   public registros: IRegistro[]=[];
   public paginaActual:number=1;
   public query:string='';
+  public queryOrden: string = 'nombre';
+  public mode:string =':false:true';
+  public queryFilterSexo:string='';
 
   constructor(private registroServices:RegistroService ) { }
 
@@ -28,6 +31,13 @@ export class RegistroComponent implements OnInit {
 
   cargarRegistros(){
      this.registroServices.getRegistros().subscribe(registros => this.registros = registros, error=>console.error(error))
+  }
+
+  orderWay(tipo:string){
+    console.log('funciono')
+    this.queryOrden = tipo 
+    console.log(this.queryOrden)
+
   }
 
 }

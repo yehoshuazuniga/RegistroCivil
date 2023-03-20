@@ -2,27 +2,37 @@
   <div class="row justify-content-center">
     <div class="col-10 col-md-12">
       <h1>Registros </h1>
-      <p  *ngIf="!(registros && registros.length )">NO hay registros Creados</p>
-      <div class="text-center mb-3"><button class="btn btn-dark col-12 col-sm-3" [routerLink]='["/add-registro"]'>Crear nuevo Registro</button></div>
+      <p *ngIf="!(registros && registros.length )">NO hay registros Creados</p>
+      <div class="text-center mb-3"><button class="btn btn-dark col-12 col-sm-3" [routerLink]='["/add-registro"]'>Crear
+          nuevo Registro</button></div>
       <div class="col-md-12">
         <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="query">
       </div>
+        <div class="col-md-12">
+            <select name="" id="ddlSexo" class="form-control" [(ngModel)]="queryFilterSexo">
+              <option value="">--- Selecciona un sexo</option>
+              <option value="F">Femenino</option>
+              <option value="M">Masculino</option>
+
+            </select>
+        </div>
       <table class="table table-stripped table-hover table-bordered" *ngIf="registros">
         <thead>
           <tr class="table table-dark">
-            <td>ID</td>
-            <td>Nombre</td>
-            <td>Apellido</td>
+            <td (click)="orderWay('registroID')">ID</td>
+            <td (click)="orderWay('nombre')">Nombre</td>
+            <td (click)="orderWay('apellido')">Apellido</td>
             <td>Sexo</td>
-            <td>Numero de identificación</td>
-            <td>Fecha de nacimiento</td>
+            <td (click)="orderWay('fechaNacimiento')">Fecha de nacimiento</td>
+            <td (click)="orderWay('numeroIdentificacion')">Numero de identificación</td>
             <td>Tipo de familia</td>
             <td></td>
             <td></td>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let registro of registros | filterdata: query:'nombre'
+          <tr *ngFor="let registro of registros | filterdata: query:'nombre' |sexofilterdata:queryFilterSexo:'sexo'
+          |orderBy: queryOrden
           | paginate:{itemsPerPage:7, currentPage:paginaActual}
           ">
             <td>{{registro.registroID}} </td>
@@ -30,15 +40,16 @@
             <td>{{registro.apellido}} </td>
             <td>{{registro.sexo}} </td>
             <td>{{registro.fechaNacimiento | date: 'dd/MM/yyyy HH:mm'  }} </td>
-            <td >{{registro.numeroIdentificacion}} </td>
-            <td class="text-center"> 
+            <td>{{registro.numeroIdentificacion}} </td>
+            <td class="text-center">
               <span *ngIf="registro.monoparental">SI</span>
               <span *ngIf="!registro.monoparental">NO</span>
             </td>
-            <td><button class="btn btn-warning" [routerLink]='["/registro-edit/"+registro.registroID]' >Editar</button></td>
+            <td><button class="btn btn-warning" [routerLink]='["/registro-edit/"+registro.registroID]'>Editar</button>
+            </td>
             <td><button class="btn btn-danger" (click)="borrar(registro)">Borrar</button></td>
           </tr>
-        </tbody>  
+        </tbody>
       </table>
       <div class="col-md-12" *ngIf="registros">
         <pagination-controls class="my-pagination" (pageChange)="paginaActual=$event"></pagination-controls>
@@ -48,7 +59,7 @@
 </div>
 
 <style>
-  .my-pagination /deep/ .ngx-paigination .current{
- background-color: blueviolet;
+  .my-pagination /deep/ .ngx-paigination .current {
+    background-color: blueviolet;
   }
 </style>

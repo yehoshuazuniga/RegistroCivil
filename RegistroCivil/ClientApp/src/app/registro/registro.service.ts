@@ -26,6 +26,8 @@ export class RegistroService {
 
   actualizarRegistro(registro:IRegistro):Observable<IRegistro>{
     this.apiURL = "https://localhost:7216/api/Registros";
+
+    console.table(registro)
     return this.http.put<IRegistro>(this.apiURL + '/' + registro.registroID.toString(), registro);
   }
 
@@ -40,4 +42,6 @@ export class RegistroService {
      this.apiURL = "https://localhost:7216/api/Registros";
     return this.http.delete<IRegistro>(this.apiURL+'/'+id);
   }
+
+
 }

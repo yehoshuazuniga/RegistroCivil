@@ -14,18 +14,20 @@ import { RegistroService } from './registro/registro.service';
 import { RegistroFormComponent } from './registro/registro-form/registro-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterdataPipe } from './pipes/filterdata.pipe';
-import { OrderModule } from 'ngx-order-pipe/public_api';
+import { OrderModule } from 'ngx-order-pipe';
+import { SexofilterdataPipe } from './pipes/sexofilterdata.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,RegistroComponent, RegistroFormComponent,
     NavMenuComponent, HomeComponent, CounterComponent,
-    FetchDataComponent, FilterdataPipe
+    FetchDataComponent, FilterdataPipe, SexofilterdataPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,ReactiveFormsModule,
-    FormsModule, NgxPaginationModule, OrderModule,
+    FormsModule, NgxPaginationModule, 
+    OrderModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },

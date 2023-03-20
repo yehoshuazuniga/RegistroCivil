@@ -41,23 +41,25 @@ export class RegistroFormComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
       if (params["id"] == undefined) {
+        //console.log(this.edicionRegistro)
+
         return;
       } else {
         this.edicionRegistro = true;
         this.registroID = params["id"];
+        this.registroSerices.getRegistro(this.registroID.toString())
+          .subscribe((registro) => this.cargarFormulario(registro), error => console.error(error));
+        //console.log(this.edicionRegistro)
+
       }
     });
-
-    this.registroSerices.getRegistro(this.registroID.toString())
-      .subscribe((registro) => this.cargarFormulario(registro), error => console.error(error));
-
-
   }
 
   cargarFormulario(registro: IRegistro) {
     let date = new Date(registro.fechaNacimiento);
     const dateField = date.toISOString().substring(0, 10);
-    const timeField = date.toISOString().substring(11, 16);
+    let h = date.getHours() >= 10 ? date.getHours() : '0' + date.getHours();
+    let m = date.getMinutes() >= 10 ? date.getMinutes() : '0' + date.getMinutes();
 
     this.formGroup.patchValue({
       numeroIdentificacion: registro.numeroIdentificacion,
@@ -65,10 +67,11 @@ export class RegistroFormComponent implements OnInit {
       apellido: registro.apellido,
       sexo: registro.sexo,
       fechaNacimiento: dateField,
-      hora: timeField,
+      hora: h+":"+m,
       monoparental: registro.monoparental
     })
-   /* console.log(date.toISOString().substring(11, 16))
+   /* console.log(this.edicionRegistro)
+    console.log(date.toISOString().substring(11, 16))
       c this.formGroup.controls['fechaNacimiento'].setValue(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate());
     this.fechaVal = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
     onsole.table(date.toLocaleDateString())
@@ -78,21 +81,28 @@ export class RegistroFormComponent implements OnInit {
 
   save() {
     
-
+ console.log(this.formGroup.value.fechaNacimiento)
     this.formGroup.value.fechaNacimiento = this.gestionFecha(this.formGroup.value.fechaNacimiento, this.formGroup.value.hora);
+    console.log(this.formGroup.value.fechaNacimiento)
+
+
     delete this.formGroup.value.hora;
     let registro: IRegistro = Object.assign({}, this.formGroup.value);
     //registro.fechaNacimiento= registro.fechaNacimiento+" "+this.formGroup.value.hora;
-    // console.table(registro);
+    console.table(registro);
 
-    this.registroSerices.crearRegistro(registro).subscribe(() => this.Registrado(), error => console.error(error))
     if(this.edicionRegistro){
       //edit
+      console.log("editar")
       registro.registroID = this.registroID;
       this.registroSerices.actualizarRegistro(registro)
         .subscribe(() => this.Registrado(), error=> console.error(error));
+        return;
     }else{
       //crear
+      console.log("Registrar")
+
+      //console.log(registro)
       this.registroSerices.crearRegistro(registro)
       .subscribe(() => this.Registrado(), error => console.error(error))
     }
@@ -108,7 +118,7 @@ export class RegistroFormComponent implements OnInit {
     let auxF: string[] = fecha.split('-')
     let auxH: string[] = hora.split(':')
 
-    let datetime: Date = new Date(parseInt(auxF[0]), parseInt(auxF[1]), parseInt(auxF[2]), parseInt(auxH[0]), parseInt(auxH[1]))
+    let datetime: Date = new Date(parseInt(auxF[0]), parseInt(auxF[1])-1, parseInt(auxF[2]), parseInt(auxH[0])+2, parseInt(auxH[1]))
 
     return datetime.toJSON();
   }
