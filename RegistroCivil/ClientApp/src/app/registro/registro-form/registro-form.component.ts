@@ -1,6 +1,7 @@
 import { Component, Directive, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { IRegistro } from '../iregistro';
 import { RegistroService } from '../registro.service';
 
@@ -26,7 +27,7 @@ export class RegistroFormComponent implements OnInit {
   edicionRegistro: boolean = false;
   registroID!: number;
   fechaVal!: Date;
-  public registrosCoinciden:number=0;
+  public coincidencia: boolean = false;
 
 
   ngOnInit(): void {
@@ -64,48 +65,48 @@ export class RegistroFormComponent implements OnInit {
     let m = date.getMinutes() >= 10 ? date.getMinutes() : '0' + date.getMinutes();
 
     this.formGroup.patchValue({
-      numeroIdentificacion: registro.numeroIdentificacion.substring(0,2),
+      numeroIdentificacion: registro.numeroIdentificacion.substring(0, 2),
       nombre: registro.nombre,
       apellido: registro.apellido,
       sexo: registro.sexo,
       fechaNacimiento: dateField,
-      hora: h+":"+m,
+      hora: h + ":" + m,
       monoparental: registro.monoparental
     })
-    console.log(this.formGroup.value.numeroIdentificacion)
-   /* console.log(this.edicionRegistro)
-    console.log(date.toISOString().substring(11, 16))
-      c this.formGroup.controls['fechaNacimiento'].setValue(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate());
-    this.fechaVal = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-    onsole.table(date.toLocaleDateString())
-    console.table(date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate())
- */
+    //console.log(this.formGroup.value.numeroIdentificacion)
+    /* console.log(this.edicionRegistro)
+     console.log(date.toISOString().substring(11, 16))
+       c this.formGroup.controls['fechaNacimiento'].setValue(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate());
+     this.fechaVal = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+     onsole.table(date.toLocaleDateString())
+     console.table(date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate())
+  */
   }
 
   save() {
-    
+
     this.formGroup.value.fechaNacimiento = this.gestionFecha(this.formGroup.value.fechaNacimiento, this.formGroup.value.hora);
     delete this.formGroup.value.hora;
-    this.formGroup.value.numeroIdentificacion = this.gestionNumeroIDentificacion(this.formGroup.value.numeroIdentificacion);
+   // this.formGroup.value.numeroIdentificacion = this.gestionNumeroIDentificacion(this.formGroup.value.numeroIdentificacion);
 
     let registro: IRegistro = Object.assign({}, this.formGroup.value);
-    console.log(registro)
-
-
-    if(this.edicionRegistro){
+    /*  console.log(registro)
+     this.comprobarNumeroIdentificaion(this.formGroup.value.numeroIdentificacion.toString()); */
+    // return;
+    if (this.edicionRegistro) {
       //edit
       console.log("editar")
       registro.registroID = this.registroID;
       this.registroSerices.actualizarRegistro(registro)
-        .subscribe(() => this.Registrado(), error=> console.error(error));
-        return;
-    }else{
+        .subscribe(() => this.Registrado(), error => console.error(error));
+      return;
+    } else {
       //crear
       console.log("Registrar")
 
       //console.log(registro)
       this.registroSerices.crearRegistro(registro)
-      .subscribe(() => this.Registrado(), error => console.error(error))
+        .subscribe(() => this.Registrado(), error => console.error(error))
     }
 
   }
@@ -118,22 +119,43 @@ export class RegistroFormComponent implements OnInit {
 
     let auxF: string[] = fecha.split('-')
     let auxH: string[] = hora.split(':')
-
-    console.log(auxF+" "+auxH)
-    let datetime: Date = new Date(parseInt(auxF[0]), parseInt(auxF[1])-1, parseInt(auxF[2]), parseInt(auxH[0])+1, parseInt(auxH[1]))
-    console.log(datetime.toJSON())
+    // console.log(parseInt(auxH[0]) + 1)
+    // console.log(auxF+" "+auxH)
+    let datetime: Date = new Date(parseInt(auxF[0]), parseInt(auxF[1]) - 1, parseInt(auxF[2]), parseInt(auxH[0]) + 1, parseInt(auxH[1]))
+    //console.log(datetime.getHours()+"*--------------------")
+    //console.log(datetime.toJSON())
 
     return datetime.toJSON();
   }
-   gestionNumeroIDentificacion(cm:string):string{
+  gestionNumeroIDentificacion(cm: string): string {
 
-    const na1 = Math.floor(Math.random() * 10) ;
-    const na2 = Math.floor(Math.random() * 10) ;
-    const na3 = Math.floor(Math.random() * 10) ;
-    const na4 = Math.floor(Math.random() * 10) ;
-    let nIdentificacion = cm +""+na1+""+na2+""+na3+""+na4;
+    let nIdentificacion: string;
 
-     return nIdentificacion;
+    const na1 = Math.floor(Math.random() * 10);
+    const na2 = Math.floor(Math.random() * 10);
+    const na3 = Math.floor(Math.random() * 10);
+    const na4 = Math.floor(Math.random() * 10);
+    nIdentificacion = cm + "" + na1 + "" + na2 + "" + na3 + "" + na4;
+
+    console.log(this.comprobarNumeroIdentificaion(nIdentificacion))
+    console.log(nIdentificacion)
+    return nIdentificacion;
+  }
+
+  comprobarNumeroIdentificaion(nIden: string) {
+
+
+    this.registroSerices.getRegistros().subscribe(responce => {
+      if (responce.filter(reg => reg.numeroIdentificacion == 'CN9462').length > 0) {
+        this.coincidencia = true;
+        //   console.log(responce.filter(reg => reg.numeroIdentificacion == 'MA253'))
+        //    console.log(this.coincidencia)
+
+      }
+    }, error => console.error(error));
+    //  console.log(this.coincidencia)
+
+    return this.coincidencia;
   }
 
 }

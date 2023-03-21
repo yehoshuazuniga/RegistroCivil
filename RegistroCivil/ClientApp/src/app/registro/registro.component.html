@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let registro of registros | filterdata: query:'nombre' |sexofilterdata:queryFilterSexo:'sexo'
-          |orderBy: queryOrden:true:false
+          |orderBy: queryOrden:gestionAscDesc:false
           | paginate:{itemsPerPage:7, currentPage:paginaActual}
           ">
             <td>{{registro.registroID}} </td>

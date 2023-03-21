@@ -9,34 +9,41 @@ import { RegistroService } from './registro.service';
 })
 export class RegistroComponent implements OnInit {
 
-  public registros: IRegistro[]=[];
-  public paginaActual:number=1;
-  public query:string='';
+  public registros: IRegistro[] = [];
+  public paginaActual: number = 1;
+  public query: string = '';
   public queryOrden: string = 'registroID';
-  public queryFilterSexo:string='';
+  public queryFilterSexo: string = '';
+  public gestionAscDesc: boolean = true;
 
-  constructor(private registroServices:RegistroService ) { }
+  constructor(private registroServices: RegistroService) { }
 
   ngOnInit(): void {
 
-   this.cargarRegistros();
+    this.cargarRegistros();
   }
 
-  borrar(registro:IRegistro){
+  borrar(registro: IRegistro) {
     this.registroServices.eliminarRegistro(registro.registroID.toString())
-    .subscribe(()=>this.cargarRegistros(), error=>console.log(error));
-    
+      .subscribe(() => this.cargarRegistros(), error => console.log(error));
+
   }
 
-  cargarRegistros(){
-     this.registroServices.getRegistros().subscribe(registros => this.registros = registros, error=>console.error(error))
+  cargarRegistros() {
+    this.registroServices.getRegistros().subscribe(registros => this.registros = registros, error => console.error(error))
   }
 
-  orderWay(tipo:string){
-    console.log('funciono')
-    this.queryOrden = tipo 
-    console.log(this.queryOrden)
+  orderWay(campo: string) {
 
+    if (campo ==this.query) {
+      console.log('funciono')
+      this.queryOrden = campo;
+      //console.log(this.queryOrden)
+    } else {
+      this.gestionAscDesc = !this.gestionAscDesc;
+      console.log(this.gestionAscDesc)
+
+    }
   }
 
 }
