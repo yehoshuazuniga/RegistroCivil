@@ -19,12 +19,12 @@
       <table class="table table-stripped table-hover table-bordered" *ngIf="registros">
         <thead>
           <tr class="table table-dark">
-            <td (click)="orderWay('registroID')">ID</td>
-            <td (click)="orderWay('nombre')">Nombre</td>
-            <td (click)="orderWay('apellido')">Apellido</td>
+            <td (click)="orderWay('registroID')">ID <i class="bi bi-search"></i></td>
+            <td (click)="orderWay('nombre') ">Nombre <span class="fa fa-sort"></span></td>
+            <td (click)="orderWay('apellido')">Apellido <span class="fa fa-sort"></span></td>
             <td>Sexo</td>
-            <td (click)="orderWay('fechaNacimiento')">Fecha de nacimiento</td>
-            <td (click)="orderWay('numeroIdentificacion')">Numero de identificación</td>
+            <td (click)="orderWay('fechaNacimiento')">Fecha de nacimiento <span class="fa fa-sort"></span></td>
+            <td (click)="orderWay('numeroIdentificacion')">Numero de identificación <span class="fa fa-sort"></span></td>
             <td>Tipo de familia</td>
             <td></td>
             <td></td>

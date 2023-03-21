@@ -25,6 +25,7 @@
     "@angular/router": "^14.0.3",
     "bootstrap": "^5.2.3",
     "jquery": "^3.6.0",
+    "ngx-bootstrap-icons": "^1.9.2",
     "ngx-order-pipe": "^2.2.0",
     "ngx-pagination": "^6.0.3",
     "oidc-client": "^1.11.5",

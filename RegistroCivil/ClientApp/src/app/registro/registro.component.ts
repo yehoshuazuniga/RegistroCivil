@@ -2,6 +2,7 @@ import { Component, OnInit, SimpleChange } from '@angular/core';
 import { IRegistro } from './iregistro';
 import { RegistroService } from './registro.service';
 
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -34,11 +35,12 @@ export class RegistroComponent implements OnInit {
   }
 
   orderWay(campo: string) {
+    console.log(this.queryOrden)
 
-    if (campo ==this.query) {
-      console.log('funciono')
+    console.log(campo)
+    if (campo != this.queryOrden) {
       this.queryOrden = campo;
-      //console.log(this.queryOrden)
+      this.gestionAscDesc=false;
     } else {
       this.gestionAscDesc = !this.gestionAscDesc;
       console.log(this.gestionAscDesc)
