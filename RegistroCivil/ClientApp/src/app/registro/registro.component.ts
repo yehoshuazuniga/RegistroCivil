@@ -1,7 +1,6 @@
-import { Component, OnInit, SimpleChange } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IRegistro } from './iregistro';
 import { RegistroService } from './registro.service';
-
 
 @Component({
   selector: 'app-registro',
@@ -35,17 +34,35 @@ export class RegistroComponent implements OnInit {
   }
 
   orderWay(campo: string) {
-    console.log(this.queryOrden)
+    //console.log(this.queryOrden)
 
-    console.log(campo)
+ //   console.log(campo)
     if (campo != this.queryOrden) {
       this.queryOrden = campo;
       this.gestionAscDesc=false;
     } else {
       this.gestionAscDesc = !this.gestionAscDesc;
-      console.log(this.gestionAscDesc)
+      //console.log(this.gestionAscDesc)
 
     }
   }
+
+  gestionIcono(event:MouseEvent):void{
+    
+    const spanEleemnt = event.target as HTMLElement;
+
+    if (spanEleemnt.className =='bi bi-sort-down'){
+      spanEleemnt.className = 'bi bi-sort-up';
+    }else{
+      if (spanEleemnt.className == 'bi bi-sort-up'){
+        spanEleemnt.className = 'bi bi-sort-down'
+      }
+    }
+
+
+
+  }
+
+
 
 }

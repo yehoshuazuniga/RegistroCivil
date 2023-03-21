@@ -19,12 +19,12 @@
       <table class="table table-stripped table-hover table-bordered" *ngIf="registros">
         <thead>
           <tr class="table table-dark">
-            <td (click)="orderWay('registroID')">ID <i class="bi bi-search"></i></td>
-            <td (click)="orderWay('nombre') ">Nombre <span class="fa fa-sort"></span></td>
-            <td (click)="orderWay('apellido')">Apellido <span class="fa fa-sort"></span></td>
+            <td (click)="orderWay('registroID')"><span class="bi bi-sort-down" (click)="gestionIcono($event)">&nbsp;ID</span></td>
+            <td (click)="orderWay('nombre') "><span class="bi bi-sort-down" (click)="gestionIcono($event)">&nbsp;Nombre </span></td>
+            <td (click)="orderWay('apellido')"><span class="bi bi-sort-down" (click)="gestionIcono($event)">&nbsp;Apellido</span></td>
             <td>Sexo</td>
-            <td (click)="orderWay('fechaNacimiento')">Fecha de nacimiento <span class="fa fa-sort"></span></td>
-            <td (click)="orderWay('numeroIdentificacion')">Numero de identificación <span class="fa fa-sort"></span></td>
+            <td (click)="orderWay('fechaNacimiento')"><span class="bi bi-sort-down" (click)="gestionIcono($event)">&nbsp;Fecha de nacimiento </span></td>
+            <td (click)="orderWay('numeroIdentificacion')"><span class="bi bi-sort-down" (click)="gestionIcono($event)">&nbsp;Numero de identificación </span></td>
             <td>Tipo de familia</td>
             <td></td>
             <td></td>
