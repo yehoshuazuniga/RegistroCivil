@@ -29,6 +29,7 @@ export class RegistroFormComponent implements OnInit {
   public fechaVal!: Date;
   public coincidencia: boolean = false;
   public auxString: string = '';
+  public auxNumeroIdentificacion: string = '';
 
 
   ngOnInit(): void {
@@ -64,7 +65,7 @@ export class RegistroFormComponent implements OnInit {
     const dateField = date.toISOString().substring(0, 10);
     let h = date.getHours() >= 10 ? date.getHours() : '0' + date.getHours();
     let m = date.getMinutes() >= 10 ? date.getMinutes() : '0' + date.getMinutes();
-
+    this.auxNumeroIdentificacion = registro.numeroIdentificacion;
     this.formGroup.patchValue({
       numeroIdentificacion: registro.numeroIdentificacion.substring(0, 2),
       nombre: registro.nombre,
@@ -74,44 +75,28 @@ export class RegistroFormComponent implements OnInit {
       hora: h + ":" + m,
       monoparental: registro.monoparental
     })
-    //console.log(this.formGroup.value.numeroIdentificacion)
-    /* console.log(this.edicionRegistro)
-     console.log(date.toISOString().substring(11, 16))
-       c this.formGroup.controls['fechaNacimiento'].setValue(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate());
-     this.fechaVal = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-     onsole.table(date.toLocaleDateString())
-     console.table(date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate())
-  */
   }
 
   save() {
 
     this.formGroup.value.fechaNacimiento = this.gestionFecha(this.formGroup.value.fechaNacimiento, this.formGroup.value.hora);
     delete this.formGroup.value.hora;
-    // this.formGroup.value.numeroIdentificacion = this.gestionNumeroIDentificacion(this.formGroup.value.numeroIdentificacion);
     let registro: IRegistro = Object.assign({}, this.formGroup.value);
     registro.numeroIdentificacion = this.auxString;
 
-    //console.log(registro)
-    /* this.comprobarNumeroIdentificaion(this.formGroup.value.numeroIdentificacion.toString()); */
     if (this.edicionRegistro) {
       //edit
-      console.log("editar")
+      if ((registro.numeroIdentificacion == '') ||
+        (registro.numeroIdentificacion.substring(0, 2) == this.auxNumeroIdentificacion.substring(0, 2))) {
+        registro.numeroIdentificacion = this.auxNumeroIdentificacion;
+      }
       registro.registroID = this.registroID;
-
 
       this.registroSerices.actualizarRegistro(registro)
         .subscribe(() => this.Registrado(), error => console.error(error));
       return;
     } else {
       //crear
-      console.log("Registrar")
-      /* console.log(registro.numeroIdentificacion)
-
-      console.log(registro)
-      console.log(this.auxString)
-      return */
-
       this.registroSerices.crearRegistro(registro)
         .subscribe(() => this.Registrado(), error => console.error(error))
     }
@@ -128,7 +113,7 @@ export class RegistroFormComponent implements OnInit {
     let auxH: string[] = hora.split(':')
     // console.log(parseInt(auxH[0]) + 1)
     // console.log(auxF+" "+auxH)
-    let datetime: Date = new Date(parseInt(auxF[0]), parseInt(auxF[1]) - 1, parseInt(auxF[2]), parseInt(auxH[0]) + 1, parseInt(auxH[1]))
+    let datetime: Date = new Date(parseInt(auxF[0]), parseInt(auxF[1]) - 1, parseInt(auxF[2]), parseInt(auxH[0]) + 2, parseInt(auxH[1]))
     //console.log(datetime.getHours()+"*--------------------")
     //console.log(datetime.toJSON())
 
@@ -148,8 +133,8 @@ export class RegistroFormComponent implements OnInit {
       while (this.comprobarNumeroIdentificaion(this.formGroup.value.numeroIdentificacion));
 
     }
-  
-   this.auxString= this.formGroup.value.numeroIdentificacion;
+
+    this.auxString = this.formGroup.value.numeroIdentificacion;
 
   }
 

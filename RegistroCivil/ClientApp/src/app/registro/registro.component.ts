@@ -33,10 +33,8 @@ export class RegistroComponent implements OnInit {
     this.registroServices.getRegistros().subscribe(registros => this.registros = registros, error => console.error(error))
   }
 
-  orderWay(campo: string) {
-    //console.log(this.queryOrden)
-
- //   console.log(campo)
+  orderWay(campo: string) { 
+    
     if (campo != this.queryOrden) {
       this.queryOrden = campo;
       this.gestionAscDesc=false;
