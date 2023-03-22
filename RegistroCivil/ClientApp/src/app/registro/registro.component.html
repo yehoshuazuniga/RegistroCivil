@@ -48,9 +48,9 @@
               <span *ngIf="registro.monoparental">SI</span>
               <span *ngIf="!registro.monoparental">NO</span>
             </td>
-            <td><button class="btn btn-warning" [routerLink]='["/registro-edit/"+registro.registroID]'>Editar</button>
+            <td><button class="btn btn-warning" [routerLink]='["/registro-edit/"+registro.registroID]'>Editar &nbsp;<i class="bi bi-pencil-fill"></i></button>
             </td>
-            <td><button class="btn btn-danger" (click)="borrar(registro)">Borrar</button></td>
+            <td><button class="btn btn-danger" (click)="borrar(registro)">Borrar &nbsp;<i class="bi bi-trash-fill"></i></button></td>
           </tr>
         </tbody>
       </table>

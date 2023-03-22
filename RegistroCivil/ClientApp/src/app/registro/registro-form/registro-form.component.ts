@@ -23,11 +23,12 @@ export class RegistroFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   //variables
-  formGroup!: FormGroup;
-  edicionRegistro: boolean = false;
-  registroID!: number;
-  fechaVal!: Date;
+  public formGroup!: FormGroup;
+  public edicionRegistro: boolean = false;
+  public registroID!: number;
+  public fechaVal!: Date;
   public coincidencia: boolean = false;
+  public auxString: string = '';
 
 
   ngOnInit(): void {
@@ -87,24 +88,30 @@ export class RegistroFormComponent implements OnInit {
 
     this.formGroup.value.fechaNacimiento = this.gestionFecha(this.formGroup.value.fechaNacimiento, this.formGroup.value.hora);
     delete this.formGroup.value.hora;
-   // this.formGroup.value.numeroIdentificacion = this.gestionNumeroIDentificacion(this.formGroup.value.numeroIdentificacion);
-
+    // this.formGroup.value.numeroIdentificacion = this.gestionNumeroIDentificacion(this.formGroup.value.numeroIdentificacion);
     let registro: IRegistro = Object.assign({}, this.formGroup.value);
-    /*  console.log(registro)
-     this.comprobarNumeroIdentificaion(this.formGroup.value.numeroIdentificacion.toString()); */
-    // return;
+    registro.numeroIdentificacion = this.auxString;
+
+    //console.log(registro)
+    /* this.comprobarNumeroIdentificaion(this.formGroup.value.numeroIdentificacion.toString()); */
     if (this.edicionRegistro) {
       //edit
       console.log("editar")
       registro.registroID = this.registroID;
+
+
       this.registroSerices.actualizarRegistro(registro)
         .subscribe(() => this.Registrado(), error => console.error(error));
       return;
     } else {
       //crear
       console.log("Registrar")
+      /* console.log(registro.numeroIdentificacion)
 
-      //console.log(registro)
+      console.log(registro)
+      console.log(this.auxString)
+      return */
+
       this.registroSerices.crearRegistro(registro)
         .subscribe(() => this.Registrado(), error => console.error(error))
     }
@@ -127,7 +134,26 @@ export class RegistroFormComponent implements OnInit {
 
     return datetime.toJSON();
   }
-  gestionNumeroIDentificacion(cm: string): string {
+
+
+  gestionNumeroIdentificaion(event: Event) {
+
+    const selectEleemnt = event.target as HTMLElement;
+
+    if (!this.edicionRegistro || event.isTrusted) {
+
+      do {
+        this.formGroup.value.numeroIdentificacion = this.generarNumeroIDentificacion(this.formGroup.value.numeroIdentificacion);
+      }
+      while (this.comprobarNumeroIdentificaion(this.formGroup.value.numeroIdentificacion));
+
+    }
+  
+   this.auxString= this.formGroup.value.numeroIdentificacion;
+
+  }
+
+  generarNumeroIDentificacion(cm: string): string {
 
     let nIdentificacion: string;
 
@@ -137,8 +163,6 @@ export class RegistroFormComponent implements OnInit {
     const na4 = Math.floor(Math.random() * 10);
     nIdentificacion = cm + "" + na1 + "" + na2 + "" + na3 + "" + na4;
 
-    console.log(this.comprobarNumeroIdentificaion(nIdentificacion))
-    console.log(nIdentificacion)
     return nIdentificacion;
   }
 
@@ -146,14 +170,11 @@ export class RegistroFormComponent implements OnInit {
 
 
     this.registroSerices.getRegistros().subscribe(responce => {
-      if (responce.filter(reg => reg.numeroIdentificacion == 'CN9462').length > 0) {
+      if (responce.filter(reg => reg.numeroIdentificacion == nIden).length > 0) {
         this.coincidencia = true;
-        //   console.log(responce.filter(reg => reg.numeroIdentificacion == 'MA253'))
-        //    console.log(this.coincidencia)
-
+        console.log(responce.filter(reg => reg.numeroIdentificacion == nIden))
       }
     }, error => console.error(error));
-    //  console.log(this.coincidencia)
 
     return this.coincidencia;
   }

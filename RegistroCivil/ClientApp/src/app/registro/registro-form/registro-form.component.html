@@ -21,13 +21,13 @@
                         >
                     </div>
                     <div class="col">
-                        <label for="numeroIdentificacion">Comunidad Autonoma</label>
+                        <label for="numeroIdentificacion">Comunidad Autonoma</label> 
                      <!--    <input type="text" class=" form-control"
                             id="numeroIdentificacion"
                             formControlName="numeroIdentificacion"
                         > -->
                         <select name="ddlNumeroIdentificaion" 
-                        class=" form-control" id="numeroIdentificacion"
+                        class=" form-control" id="numeroIdentificacion" (change)="gestionNumeroIdentificaion($event)"
                         formControlName="numeroIdentificacion">
                             <option value="">--- Seleccione Comunidad Autonoma ---</option>
                             <option value="AN">Andalucía</option>
