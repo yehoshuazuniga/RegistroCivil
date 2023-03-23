@@ -164,4 +164,8 @@ export class RegistroFormComponent implements OnInit {
     return this.coincidencia;
   }
 
+  get f() {
+    return this.formGroup.controls;
+  }
+
 }

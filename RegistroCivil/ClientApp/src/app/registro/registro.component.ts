@@ -34,7 +34,7 @@ export class RegistroComponent implements OnInit {
   }
 
   orderWay(campo: string) { 
-    
+
     if (campo != this.queryOrden) {
       this.queryOrden = campo;
       this.gestionAscDesc=false;
@@ -56,11 +56,5 @@ export class RegistroComponent implements OnInit {
         spanEleemnt.className = 'bi bi-sort-down'
       }
     }
-
-
-
   }
-
-
-
 }
