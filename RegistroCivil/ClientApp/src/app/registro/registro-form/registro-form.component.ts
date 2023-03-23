@@ -91,12 +91,14 @@ export class RegistroFormComponent implements OnInit {
         registro.numeroIdentificacion = this.auxNumeroIdentificacion;
       }
       registro.registroID = this.registroID;
+      console.table(registro)
 
       this.registroSerices.actualizarRegistro(registro)
         .subscribe(() => this.Registrado(), error => console.error(error));
       return;
     } else {
       //crear
+    
       this.registroSerices.crearRegistro(registro)
         .subscribe(() => this.Registrado(), error => console.error(error))
     }
@@ -109,15 +111,14 @@ export class RegistroFormComponent implements OnInit {
 
   gestionFecha(fecha: string, hora: string): string {
 
-    let auxF: string[] = fecha.split('-')
+    /* let auxF: string[] = fecha.split('-')
     let auxH: string[] = hora.split(':')
     // console.log(parseInt(auxH[0]) + 1)
-    // console.log(auxF+" "+auxH)
+     console.log(auxF+" "+auxH)
     let datetime: Date = new Date(parseInt(auxF[0]), parseInt(auxF[1]) - 1, parseInt(auxF[2]), parseInt(auxH[0]) + 2, parseInt(auxH[1]))
-    //console.log(datetime.getHours()+"*--------------------")
-    //console.log(datetime.toJSON())
-
-    return datetime.toJSON();
+    console.log(datetime.getHours()+"*--------------------")
+    console.log(datetime.toJSON()) */
+    return fecha +'T'+hora+':00.000Z';
   }
 
 
