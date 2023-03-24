@@ -1,126 +1,159 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-10 col-md-12">
-            <h1 *ngIf="!edicionRegistro">Añadir registros</h1>
-            <h1 *ngIf="edicionRegistro">Editar registros</h1>
-            <form class="form shadow-lg " (ngSubmit)="save()" [formGroup]="formGroup" novalidate>
-                <fieldset>
-                    <div class="col">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class=" form-control" id="nombre" pattern="^[A-Za-z ]+$" minlength="4"
-                            required formControlName="nombre">
-                        <span class="help-block text-danger" *ngIf="f['nombre'].touched && f['nombre'].invalid">
-                            <span *ngIf="f['nombre'].errors && f['nombre'].errors['required']">El campo nombre es
-                                obligatorio<br /></span>
-                            <span *ngIf="f['nombre'].errors && f['nombre'].errors['minlength']">Se debe tener por lo
-                                menos 4 caracteres <br /></span>
-                            <span *ngIf="f['nombre'].errors && f['nombre'].errors['pattern']">Solo se admiten
-                                letras</span>
-                        </span>
-                    </div>
+            <div class="card rounded-0 rounded-top " >
+                <div class="card-header ">
+                <h1 *ngIf="!edicionRegistro" class="  text-center fw-bold my-2">Añadir un nuevo registro</h1>
+                <h1 *ngIf="edicionRegistro" class="  text-center fw-bold my-2">Editar registro</h1>
+                </div>
+                <form class="form shadow-lg  card-body" (ngSubmit)="save()" [formGroup]="formGroup" novalidate>
+                    <fieldset class="m-2 bg-gradient" >
+                        <div class="col ">
+                            <div class="input-group mb-3">
 
-                    <div class="col">
-                        <label for="apellido">Apellido</label>
-                        <input type="text" class=" form-control" id="apellido" pattern="^[A-Za-z ]+$" minlength="4"
-                            required formControlName="apellido">
-                        <span class="help-block text-danger" *ngIf="f['apellido'].touched && f['apellido'].invalid">
-                            <span *ngIf="f['apellido'].errors && f['apellido'].errors['required']">El campo apellido es
-                                obligatorio<br /></span>
-                            <span *ngIf="f['apellido'].errors && f['apellido'].errors['minlength']">Se debe tener por
-                                lo menos 4 caracteres
-                                <br /></span>
-                            <span *ngIf="f['apellido'].errors && f['apellido'].errors['pattern']">Solo se admiten
-                                letras</span>
-                        </span>
-                    </div>
-                    <div class="col">
-                        <label for="numeroIdentificacion">Comunidad Autonoma</label>
-                        <!--    <input type="text" class=" form-control"
+                                <label for="nombre" class="input-group-text">Nombre</label>
+                                <input type="text" class=" form-control" id="nombre" pattern="^[A-Za-z ]+$"
+                                    minlength="4" required formControlName="nombre">
+                            </div> 
+                            <span class="help-block text-danger" *ngIf="f['nombre'].touched && f['nombre'].invalid">
+                                <span *ngIf="f['nombre'].errors && f['nombre'].errors['required']">El campo nombre es
+                                    obligatorio<br /></span>
+                                <span *ngIf="f['nombre'].errors && f['nombre'].errors['minlength']">Se debe tener por lo
+                                    menos 4 caracteres <br /></span>
+                                <span *ngIf="f['nombre'].errors && f['nombre'].errors['pattern']">Solo se admiten
+                                    letras</span>
+                            </span>
+                        </div>
+
+                        <div class="col">
+                            <div class="input-group mb-3">
+
+                                <label for="apellido" class="input-group-text">Apellido</label>
+                                <input type="text" class=" form-control" id="apellido" pattern="^[A-Za-z ]+$"
+                                    minlength="4" required formControlName="apellido">
+                            </div>
+                            <span class="help-block text-danger" *ngIf="f['apellido'].touched && f['apellido'].invalid">
+                                <span *ngIf="f['apellido'].errors && f['apellido'].errors['required']">El campo apellido
+                                    es
+                                    obligatorio<br /></span>
+                                <span *ngIf="f['apellido'].errors && f['apellido'].errors['minlength']">Se debe tener
+                                    por
+                                    lo menos 4 caracteres
+                                    <br /></span>
+                                <span *ngIf="f['apellido'].errors && f['apellido'].errors['pattern']">Solo se admiten
+                                    letras</span>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+
+                                <label for="numeroIdentificacion" class="input-group-text">Comunidad Autonoma</label>
+                                <!--    <input type="text" class=" form-control"
                             id="numeroIdentificacion"
                             formControlName="numeroIdentificacion"
                         > -->
-                        <select name="ddlNumeroIdentificaion" class=" form-control" id="numeroIdentificacion"
-                            (change)="gestionNumeroIdentificaion($event)" required
-                            formControlName="numeroIdentificacion">
-                            <option value="">--- Seleccione Comunidad Autonoma ---</option>
-                            <option value="AN">Andalucía</option>
-                            <option value="AR">Aragón</option>
-                            <option value="AS">Asturias</option>
-                            <option value="IB">Baleares</option>
-                            <option value="CN">Canarias</option>
-                            <option value="CB">Cantabria</option>
-                            <option value="CM">Castilla-La Mancha</option>
-                            <option value="CL">Castilla y León</option>
-                            <option value="CT">Cataluña</option>
-                            <option value="CE">Ceuta</option>
-                            <option value="VC">Comunidad Valenciana</option>
-                            <option value="EX">Extremadura</option>
-                            <option value="GA">Galicia</option>
-                            <option value="MD">Madrid</option>
-                            <option value="ML">Melilla</option>
-                            <option value="MU">Murcia</option>
-                            <option value="NA">Navarra</option>
-                            <option value="PV">País Vasco</option>
-                            <option value="RI">La Rioja</option>
-                        </select>
-                        <span class="help-block text-danger"
-                            *ngIf="f['numeroIdentificacion'].touched && f['numeroIdentificacion'].invalid">
-                            <span
-                                *ngIf="f['numeroIdentificacion'].errors && f['numeroIdentificacion'].errors['required']">Se
-                                debe seleccionar
-                                una comunidad autonoma<br /></span>
+                                <select name="ddlNumeroIdentificaion" class=" form-control" id="numeroIdentificacion"
+                                    (change)="gestionNumeroIdentificaion($event)" required
+                                    formControlName="numeroIdentificacion">
+                                    <option value="">--- Seleccione Comunidad Autonoma ---</option>
+                                    <option value="AN">Andalucía</option>
+                                    <option value="AR">Aragón</option>
+                                    <option value="AS">Asturias</option>
+                                    <option value="IB">Baleares</option>
+                                    <option value="CN">Canarias</option>
+                                    <option value="CB">Cantabria</option>
+                                    <option value="CM">Castilla-La Mancha</option>
+                                    <option value="CL">Castilla y León</option>
+                                    <option value="CT">Cataluña</option>
+                                    <option value="CE">Ceuta</option>
+                                    <option value="VC">Comunidad Valenciana</option>
+                                    <option value="EX">Extremadura</option>
+                                    <option value="GA">Galicia</option>
+                                    <option value="MD">Madrid</option>
+                                    <option value="ML">Melilla</option>
+                                    <option value="MU">Murcia</option>
+                                    <option value="NA">Navarra</option>
+                                    <option value="PV">País Vasco</option>
+                                    <option value="RI">La Rioja</option>
+                                </select>
+                            </div>
+                            <span class="help-block text-danger"
+                                *ngIf="f['numeroIdentificacion'].touched && f['numeroIdentificacion'].invalid">
+                                <span
+                                    *ngIf="f['numeroIdentificacion'].errors && f['numeroIdentificacion'].errors['required']">Se
+                                    debe seleccionar
+                                    una comunidad autonoma<br /></span>
 
-                        </span>
-                    </div>
-                    <div class="col">
-                        <label for="sexo">Sexo</label>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
 
-                        <select class=" form-control" id="ddlSexoFrom" formControlName="sexo" required>
-                            <option value="">--- Selecciona un Sexo ---</option>
-                            <option value="F">Femenino</option>
-                            <option value="M">Masculino</option>
-                        </select>
-                        <span class="help-block text-danger" *ngIf="f['sexo'].touched && f['sexo'].invalid">
-                            <span *ngIf="f['sexo'].errors && f['sexo'].errors['required']">Se debe seleccionar
-                                un tipo de sexo<br /></span>
+                                <label for="ddlSexoFrom" class="input-group-text">Sexo</label>
 
-                        </span>
-                    </div>
-                    <div class="col">
-                        <label for="fechaNacimiento">Fecha de Nacimiento</label>
-                        <input type="date" class=" form-control" id="fechaNacimiento" min="2000-01-02"
-                            formControlName="fechaNacimiento" required>
-                        <span class="help-block text-danger"
-                            *ngIf="f['fechaNacimiento'].touched && f['fechaNacimiento'].invalid">
-                            <span *ngIf="f['fechaNacimiento'].errors && f['fechaNacimiento'].errors['required']">Se debe
-                                seleccionar
-                                un una fecha <br /></span>
-                            <span *ngIf="f['fechaNacimiento'].errors && f['fechaNacimiento'].errors['minlength']">Se
-                                debe seleccionar una fecha valida <br /></span>
-                        </span>
-                    </div>
-                    <div class="col">
-                        <label for="hora">Hora de Nacimiento</label>
-                        <input type="time" class=" form-control" id="hora" formControlName="hora" required>
-                        <span class="help-block text-danger"
-                            *ngIf="f['hora'].touched && f['hora'].invalid">
-                            <span *ngIf="f['hora'].errors && f['hora'].errors['required']">Se debe
-                                seleccionar
-                                una hora <br /></span>                           
-                        </span>
-                    </div>
+                                <select class=" form-control" id="ddlSexoFrom" formControlName="sexo" required>
+                                    <option value="">--- Selecciona un Sexo ---</option>
+                                    <option value="F">Femenino</option>
+                                    <option value="M">Masculino</option>
+                                </select>
+                            </div>
+                            <span class="help-block text-danger" *ngIf="f['sexo'].touched && f['sexo'].invalid">
+                                <span *ngIf="f['sexo'].errors && f['sexo'].errors['required']">Se debe seleccionar
+                                    un tipo de sexo<br /></span>
 
-                    <div class="col">
-                        <label for="monoparental">Familia monoparental</label>
-                        <input type="checkbox" class=" form-check" id="monoparental" formControlName="monoparental">
-                    </div>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
 
-                </fieldset>
-                <div class=" col">
-                    <button class="btn btn-primary" type="submit" [disabled]="!formGroup.valid">Enviar</button>
-                    <button class="btn btn-danger" [routerLink]='["/registro"]'>Cancel</button>
-                </div>
-            </form>
+                                <label for="fechaNacimiento" class="input-group-text">Fecha de Nacimiento</label>
+                                <input type="date" class=" form-control" id="fechaNacimiento" min="2000-01-02"
+                                    formControlName="fechaNacimiento" required>
+                            </div>
+                            <span class="help-block text-danger"
+                                *ngIf="f['fechaNacimiento'].touched && f['fechaNacimiento'].invalid">
+                                <span *ngIf="f['fechaNacimiento'].errors && f['fechaNacimiento'].errors['required']">Se
+                                    debe
+                                    seleccionar
+                                    un una fecha <br /></span>
+                                <span *ngIf="f['fechaNacimiento'].errors && f['fechaNacimiento'].errors['minlength']">Se
+                                    debe seleccionar una fecha valida <br /></span>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+
+                                <label for="hora" class="input-group-text">Hora de Nacimiento</label>
+                                <input type="time" class=" form-control" id="hora" formControlName="hora" required>
+                            </div>
+                            <span class="help-block text-danger" *ngIf="f['hora'].touched && f['hora'].invalid">
+                                <span *ngIf="f['hora'].errors && f['hora'].errors['required']">Se debe
+                                    seleccionar
+                                    una hora <br /></span>
+                            </span>
+                        </div>
+
+                        <div class="col mb-3">
+                            <div class="input-group mb-3">
+
+                                <div class="form-check form-switch">
+                                    <input type="checkbox" class=" form-check-input" id="monoparental"
+                                        formControlName="monoparental">
+                                    <label for="monoparental" class="form-check-label">Familia monoparental</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    <div class=" col row justify-content-center">
+                        <div class="btn-group col-8 ">
+                            <button class="btn btn-primary bg-blue-700 col-9" type="submit"
+                                [disabled]="!formGroup.valid">Enviar</button>
+                            <button class="btn btn-danger bg-red-700 col-3" [routerLink]='["/registro"]'>Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

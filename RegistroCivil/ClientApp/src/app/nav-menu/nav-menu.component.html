@@ -1,38 +1,22 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    class="navbar navbar-expand-sm navbar-dark bg-dark  border-bottom box-shadow mb-3"
   >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">RegistroCivil</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <div class="container-fluid text-center">
+      <div class=" position-absolute">
+        <a class="navbar-brand fs-2" [routerLink]="['/']">RegistroCivil</a>
+      </div>
       <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+        class="navbar-collapse collapse d-sm-inline-flex justify-content-center"
         [ngClass]="{ show: isExpanded }"
       >
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item"
-              [routerLinkActive]="['link-active']"
-              [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+        <ul class="navbar-nav flex-grow align-self-center">
+         
+          <li class="nav-item mx-3" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-white btn btn-outline-light" [routerLink]="['/registros']">Lista de Registros</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/registros']">Registro</a>
+          <li class="nav-item mx-3 " [routerLinkActive]="['link-active']">
+            <a class="nav-link text-white  btn btn-outline-light" [routerLink]="['/add-registro']">Añadir un Registros</a>
           </li>
         </ul>
       </div>
