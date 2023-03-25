@@ -1,8 +1,17 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-6">
-      <h1>Listado de registros</h1>
-      <p>lorenminpzu</p>
+      <h1 class=" display-1 fw-bold text-center" >Registro Civil</h1>
+      <div class="row justify-content-center">
+        <div  class=" col-10">
+          <img src="assets/images/informe_318-369959.avif" class=" img-fluid" alt="HOLA">
+        </div>
+
+      </div>
+      <div class="  d-flex justify-content-around mt-4 p-0">
+        <div class="  m-0"><button class=" btn btn-outline-dark" [routerLink]="['/add-registro']">Añadir un nuevo Registro</button></div>
+        <div class="  m-0"><button class=" btn btn-outline-dark" [routerLink]="['/registros']">Ver lista de Registros</button></div>
+      </div>
     </div>
   </div>
 </div>

@@ -7,7 +7,8 @@
           nuevo Registro</button></div> -->
       <div  *ngIf="registros.length>0">
         <div class="col-md-12">
-          <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="query">
+          <label for="fldBuscar"></label>
+          <input type="text" class="form-control" id="fldBuscar" placeholder="Buscar" [(ngModel)]="query">
         </div>
         <div class="col-md-12">
           <select name="" id="ddlSexo" class="form-control" [(ngModel)]="queryFilterSexo">
@@ -64,7 +65,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-12" *ngIf="registros">
+      <div class="col-md-12 text-center" *ngIf="registros">
         <pagination-controls class="my-pagination" (pageChange)="paginaActual=$event"></pagination-controls>
       </div>
     </div>

@@ -15,11 +15,14 @@ export class RegistroComponent implements OnInit {
   public queryOrden: string = 'registroID';
   public queryFilterSexo: string = '';
   public gestionAscDesc: boolean = true;
+  
+
 
   constructor(private registroServices: RegistroService) { }
 
   ngOnInit(): void {
 
+    //this.serviceNav.isShow=true;
     this.cargarRegistros();
   }
 

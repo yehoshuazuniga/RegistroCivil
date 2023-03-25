@@ -29,11 +29,10 @@ import { SexofilterdataPipe } from './pipes/sexofilterdata.pipe';
     FormsModule, NgxPaginationModule, 
     OrderModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent, pathMatch: 'full' },/* 
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'fetch-data', component: FetchDataComponent }, */
       { path: 'registros', component: RegistroComponent },
-      { path: 'add-registro', component: RegistroFormComponent },
       { path: 'add-registro', component: RegistroFormComponent },
       { path: 'registro-edit/:id', component: RegistroFormComponent }
     ])
