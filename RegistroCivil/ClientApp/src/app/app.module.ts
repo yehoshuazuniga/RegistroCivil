@@ -16,12 +16,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterdataPipe } from './pipes/filterdata.pipe';
 import { OrderModule } from 'ngx-order-pipe';
 import { SexofilterdataPipe } from './pipes/sexofilterdata.pipe';
+import { CcaafilterdataPipe } from './pipes/ccaafilterdata.pipe';
+import { TipofamiliafilterdataPipe } from './pipes/tipofamiliafilterdata.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,RegistroComponent, RegistroFormComponent,
     NavMenuComponent, HomeComponent, CounterComponent,
-    FetchDataComponent, FilterdataPipe, SexofilterdataPipe
+    FetchDataComponent, FilterdataPipe, SexofilterdataPipe,
+    CcaafilterdataPipe, TipofamiliafilterdataPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

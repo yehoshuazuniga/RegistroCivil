@@ -3,11 +3,11 @@ import { IRegistro } from '../registro/iregistro';
 
 @Pipe({
   name: 'sexofilterdata',
-  pure:true
+  pure:false
 })
 export class SexofilterdataPipe implements PipeTransform {
 
-  transform(registros:IRegistro[], value:string, label:string): unknown {
+  transform(registros:IRegistro[], value:string, label:string): IRegistro[] {
     if(!registros) return[];
     if(!value) return registros;
     if(value== null || value=='') return [];
