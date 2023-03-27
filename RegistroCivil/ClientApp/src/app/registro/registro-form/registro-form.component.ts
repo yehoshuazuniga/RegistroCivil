@@ -34,6 +34,8 @@ export class RegistroFormComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+    
     this.formGroup = this.fb.group({
       numeroIdentificacion: '',
       nombre: '',

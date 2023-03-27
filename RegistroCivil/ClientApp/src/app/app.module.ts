@@ -16,12 +16,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterdataPipe } from './pipes/filterdata.pipe';
 import { OrderModule } from 'ngx-order-pipe';
 import { SexofilterdataPipe } from './pipes/sexofilterdata.pipe';
+import { CcaafilterdataPipe } from './pipes/ccaafilterdata.pipe';
+import { TipofamiliafilterdataPipe } from './pipes/tipofamiliafilterdata.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,RegistroComponent, RegistroFormComponent,
     NavMenuComponent, HomeComponent, CounterComponent,
-    FetchDataComponent, FilterdataPipe, SexofilterdataPipe
+    FetchDataComponent, FilterdataPipe, SexofilterdataPipe,
+    CcaafilterdataPipe, TipofamiliafilterdataPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,11 +32,10 @@ import { SexofilterdataPipe } from './pipes/sexofilterdata.pipe';
     FormsModule, NgxPaginationModule, 
     OrderModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent, pathMatch: 'full' },/* 
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'fetch-data', component: FetchDataComponent }, */
       { path: 'registros', component: RegistroComponent },
-      { path: 'add-registro', component: RegistroFormComponent },
       { path: 'add-registro', component: RegistroFormComponent },
       { path: 'registro-edit/:id', component: RegistroFormComponent }
     ])

@@ -5,67 +5,148 @@
       <p *ngIf="!(registros && registros.length )">NO hay registros Creados</p>
       <!-- <div class="text-center mb-3"><button class="btn btn-dark col-12 col-sm-3" [routerLink]='["/add-registro"]'>Crear
           nuevo Registro</button></div> -->
-      <div  *ngIf="registros.length>0">
-        <div class="col-md-12">
-          <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="query">
+      <div *ngIf="registros.length>0" class="row justify-content-start">
+        <div class="row mb-3">
+          <div class="col-6">
+            <label for="fldBuscar" class=" fs-4 mb-2">Buscar <i class=" bi bi-search"></i></label>
+            <input type="text" class="form-control" id="fldBuscar" placeholder="Intrduce nombre" [(ngModel)]="query">
+          </div>
         </div>
-        <div class="col-md-12">
+        <!--  <div class="col-md-12">
+          <label for="ddsSexo">Agrupar por Sexo</label>
           <select name="" id="ddlSexo" class="form-control" [(ngModel)]="queryFilterSexo">
             <option value="">--- Selecciona un sexo</option>
             <option value="F">Femenino</option>
             <option value="M">Masculino</option>
 
           </select>
+
+        </div> -->
+        <div class=" row justify-content-center justify-content-lg-evenly  mb-3">
+          <div class="col-12 col-lg-3 order-2">
+            <legend>Agrupar por sexo</legend>
+
+            <div class="form-check form-switch">
+              <input type="radio" class=" form-check-input" id="sexoM" name="sexo" value="M"
+                [(ngModel)]="queryFilterSexo" />
+              <label for="sexoM" class="form-check-label mx-2">Masculino</label>
+            </div>
+
+            <div class="form-check form-switch">
+              <input type="radio" class=" form-check-input" id="sexoF" name="sexo" value="F"
+                [(ngModel)]="queryFilterSexo" />
+              <label for="sexoF" class="form-check-label mx-2">Femenino</label>
+            </div>
+
+            <div class="form-check form-switch">
+              <input type="radio" class=" form-check-input" id="sexoN" name="sexo" value=""
+                [(ngModel)]="queryFilterSexo" />
+              <label for="sexoN" class="form-check-label mx-2">Ambos</label>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3 order-3">
+            <legend>Agrupar por Tipo de familia</legend>
+
+            <div class="form-check form-switch">
+              <input type="radio" class=" form-check-input" id="FamiliaM" name="tipofamilia" value="true"
+                [(ngModel)]="queryTipoFamilia" />
+              <label for="FamiliaM" class="form-check-label mx-2">Monoparental</label>
+            </div>
+
+            <div class="form-check form-switch">
+              <input type="radio" class=" form-check-input" id="FamiliaB" name="tipofamilia" value="false"
+                [(ngModel)]="queryTipoFamilia" />
+              <label for="FamiliaB" class="form-check-label mx-2">Biparental</label>
+            </div>
+
+            <div class="form-check form-switch">
+              <input type="radio" class=" form-check-input" id="familia" name="tipofamilia" value=""
+                [(ngModel)]="queryTipoFamilia"  checked="true"/>
+              <label for="familia" class="form-check-label mx-2">Ambos</label>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3 order-1 align-self-center mb-3">
+            <h4 class="">Agrupa por Comunidad Autónoma</h4>
+            <select name="ddlCCAA" class=" form-control " [(ngModel)]="queryFilterCCAA">
+              <option value="">--- Seleccione Comunidad Autonoma ---</option>
+              <option value="AN">Andalucía</option>
+              <option value="AR">Aragón</option>
+              <option value="AS">Asturias</option>
+              <option value="IB">Baleares</option>
+              <option value="CN">Canarias</option>
+              <option value="CB">Cantabria</option>
+              <option value="CM">Castilla-La Mancha</option>
+              <option value="CL">Castilla y León</option>
+              <option value="CT">Cataluña</option>
+              <option value="CE">Ceuta</option>
+              <option value="VC">Comunidad Valenciana</option>
+              <option value="EX">Extremadura</option>
+              <option value="GA">Galicia</option>
+              <option value="MD">Madrid</option>
+              <option value="ML">Melilla</option>
+              <option value="MU">Murcia</option>
+              <option value="NA">Navarra</option>
+              <option value="PV">País Vasco</option>
+              <option value="RI">La Rioja</option>
+            </select>
+          </div>
         </div>
+ 
+
         <table class="table table-stripped table-hover table-bordered">
           <thead>
             <tr class="table table-dark">
-              <td (click)="orderWay('registroID')"><span class="bi bi-sort-down"
-                  (click)="gestionIcono($event)">&nbsp;ID</span></td>
-              <td (click)="orderWay('nombre') "><span class="bi bi-sort-down"
-                  (click)="gestionIcono($event)">&nbsp;Nombre </span></td>
-              <td (click)="orderWay('apellido')"><span class="bi bi-sort-down"
-                  (click)="gestionIcono($event)">&nbsp;Apellido</span></td>
-              <td>Sexo</td>
-              <td (click)="orderWay('fechaNacimiento')"><span class="bi bi-sort-down"
-                  (click)="gestionIcono($event)">&nbsp;Fecha de nacimiento </span></td>
-              <td (click)="orderWay('numeroIdentificacion')"><span class="bi bi-sort-down"
-                  (click)="gestionIcono($event)">&nbsp;Numero de identificación </span></td>
-              <td>Familia Monoparental</td>
-              <td></td>
-              <td></td>
+              <th class="text-center"  (click)="orderWay('registroID')"><span class="bi bi-sort-down"
+                  (click)="gestionIcono($event)">&nbsp;ID</span></th>
+              <th class="text-center"  (click)="orderWay('nombre') "><span class="bi bi-sort-down"
+                  (click)="gestionIcono($event)">&nbsp;Nombre </span></th>
+              <th class="text-center"  (click)="orderWay('apellido')"><span class="bi bi-sort-down"
+                  (click)="gestionIcono($event)">&nbsp;Apellido</span></th>
+              <th class="text-center" >Sexo</th>
+              <th class="text-center"  (click)="orderWay('fechaNacimiento')"><span class="bi bi-sort-down"
+                  (click)="gestionIcono($event)">&nbsp;Fecha <br> de nacimiento </span></th>
+              <th class="text-center"  (click)="orderWay('numeroIdentificacion')"><span class="bi bi-sort-down"
+                  (click)="gestionIcono($event)">&nbsp;Numero <br> de identificación </span></th>
+              <th class="text-center" >Familia <br> Monoparental</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let registro of registros | filterdata: query:'nombre' |sexofilterdata:queryFilterSexo:'sexo'
-          |orderBy: queryOrden:gestionAscDesc:false
-          | paginate:{itemsPerPage:7, currentPage:paginaActual}
+            <tr *ngFor="let registro of registros | filterdata: query:'nombre' 
+            | tipofamiliafilterdata:queryTipoFamilia:'monoparental'
+            | sexofilterdata:queryFilterSexo:'sexo'
+            | ccaafilterdata :queryFilterCCAA:'numeroIdentificacion'
+            | orderBy: queryOrden:gestionAscDesc:false
+            | paginate:{itemsPerPage:10, currentPage:paginaActual}
           ">
-              <td>{{registro.registroID}} </td>
+              <td class=" text-center">{{registro.registroID}} </td>
               <td>{{registro.nombre}} </td>
               <td>{{registro.apellido}} </td>
-              <td>
+              <td class=" text-center">
                 <span *ngIf="registro.sexo =='F'">Femenino</span>
                 <span *ngIf="registro.sexo =='M'">Masculino</span>
               </td>
-              <td>{{registro.fechaNacimiento | date: 'dd/MM/yyyy HH:mm'  }} </td>
-              <td>{{registro.numeroIdentificacion}} </td>
+              <td class=" text-center">{{registro.fechaNacimiento | date: 'dd/MM/yyyy HH:mm'  }} </td>
+              <td class=" text-center">{{registro.numeroIdentificacion}} /
+                {{buscarCCAA(registro.numeroIdentificacion.toString())}}
+              </td>
               <td class="text-center">
-                
                 <i class="bi bi-check-lg text-success fs-4 fw-bolder" *ngIf="registro.monoparental"></i>
                 <i class="bi bi-x-lg text-danger fs-4 fw-bolder" *ngIf="!registro.monoparental"></i>
               </td>
-              <td><button class="btn btn-warning" [routerLink]='["/registro-edit/"+registro.registroID]'>Editar &nbsp;<i
-                    class="bi bi-pencil-fill"></i></button>
-              </td>
-              <td><button class="btn btn-danger" (click)="borrar(registro)">Borrar &nbsp;<i
-                    class="bi bi-trash-fill"></i></button></td>
+              <td class=" text-center  p-1">
+                <div class=" btn-group rounded-3">
+                  <button class="btn btn-warning" [routerLink]='["/registro-edit/"+registro.registroID]'>Editar &nbsp;<i
+                      class="bi bi-pencil-fill"></i></button>
+                  <button class="btn btn-danger" (click)="borrar(registro)">Borrar &nbsp;<i
+                      class="bi bi-trash-fill"></i></button>
+                </div>
             </tr>
           </tbody>
         </table>
-      </div>
-      <div class="col-md-12" *ngIf="registros">
-        <pagination-controls class="my-pagination" (pageChange)="paginaActual=$event"></pagination-controls>
+        <div class="col-md-12 text-center" *ngIf="registros">
+          <pagination-controls class="my-pagination" (pageChange)="paginaActual=$event"></pagination-controls>
+        </div>
       </div>
     </div>
   </div>

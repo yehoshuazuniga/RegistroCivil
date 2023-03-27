@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { IRegistro } from './iregistro';
 import { RegistroService } from './registro.service';
 
@@ -14,12 +15,39 @@ export class RegistroComponent implements OnInit {
   public query: string = '';
   public queryOrden: string = 'registroID';
   public queryFilterSexo: string = '';
+  public queryFilterCCAA: string = '';
+  public queryTipoFamilia: string='' ;
   public gestionAscDesc: boolean = true;
+  public comunidadAutonoma!: string;
+  public radioGroup!: FormGroup;
+  public diccionarioCCAA = {
+    "AN": "Andalucía ",
+    "AR": "Aragón ",
+    "AS": "Asturias ",
+    "IB": "Baleares ",
+    "CN": "Canarias ",
+    "CB": "Cantabria ",
+    "CM": "Castilla - La Mancha ",
+    "CL": "Castilla y León ",
+    "CT": "Cataluña ",
+    "CE": "Ceuta ",
+    "VC": "Comunidad Valenciana ",
+    "EX": "Extremadura ",
+    "GA": "Galicia ",
+    "MD": "Madrid ",
+    "ML": "Melilla ",
+    "MU": "Murcia ",
+    "NA": "Navarra ",
+    "PV": "País Vasco ",
+    "RI": "La Rioja "
+  }
+
 
   constructor(private registroServices: RegistroService) { }
 
   ngOnInit(): void {
 
+    //this.serviceNav.isShow=true;
     this.cargarRegistros();
   }
 
@@ -33,11 +61,11 @@ export class RegistroComponent implements OnInit {
     this.registroServices.getRegistros().subscribe(registros => this.registros = registros, error => console.error(error))
   }
 
-  orderWay(campo: string) { 
+  orderWay(campo: string) {
 
     if (campo != this.queryOrden) {
       this.queryOrden = campo;
-      this.gestionAscDesc=false;
+      this.gestionAscDesc = false;
     } else {
       this.gestionAscDesc = !this.gestionAscDesc;
       //console.log(this.gestionAscDesc)
@@ -45,16 +73,29 @@ export class RegistroComponent implements OnInit {
     }
   }
 
-  gestionIcono(event:MouseEvent):void{
-    
+  gestionIcono(event: MouseEvent): void {
+
     const spanEleemnt = event.target as HTMLElement;
 
-    if (spanEleemnt.className =='bi bi-sort-down'){
+    if (spanEleemnt.className == 'bi bi-sort-down') {
       spanEleemnt.className = 'bi bi-sort-up';
-    }else{
-      if (spanEleemnt.className == 'bi bi-sort-up'){
+    } else {
+      if (spanEleemnt.className == 'bi bi-sort-up') {
         spanEleemnt.className = 'bi bi-sort-down'
       }
     }
   }
+
+
+  buscarCCAA(cod:string):string{
+    let aux2='';
+    for (const [key, value] of Object.entries(this.diccionarioCCAA)) {
+      if (key.toString() == cod.substring(0, 2)) {
+        aux2 = value.toString();
+
+      }
+
+    }
+    return aux2; 
+   }
 }
